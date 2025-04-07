@@ -1,40 +1,37 @@
 import {Wheel} from '../dist/spin-wheel-esm.js';
 
 window.onload = () => {
-  // Create segments (1 winner, 49 "Thank You")
+  // Create 49 "Thank You" segments and 1 "$5" segment
   const segments = Array(49).fill({ 
     label: 'Thank You', 
     color: '#36A2EB' 
   }).concat({
     label: '$5 🎉', 
     color: '#FFCE56',
-    size: 2 
+    size: 2 // Makes winning segment slightly more prominent
   });
 
-  const props = {
-    items: segments,
-    rotationSpeedMax: 8,
-    itemLabelRadius: 0.7
-  };
-
   const container = document.querySelector('.wheel-wrapper');
-  window.wheel = new Wheel(container, props);
+  window.wheel = new Wheel(container, {
+    items: segments,
+    rotationSpeedMax: 10, // Faster initial spin
+    itemLabelRadius: 0.7,
+    dragToSpin: false, // Disable drag-to-spin
+    spinTime: 5, // Duration in seconds
+    spinEasing: 'Cubic.easeOut' // Smooth slowdown
+  });
 
-  const spinButton = document.getElementById('spin-button');
-  let hasSpun = false; // Track if spun already
-
-  spinButton.addEventListener('click', () => {
-    if (hasSpun) {
-      alert("You've already spun the wheel!"); // Block re-spins
-      return;
-    }
-
-    window.wheel.spin();
-    hasSpun = true; // Mark as spun
+  // Spin button logic
+  document.getElementById('spin-button').addEventListener('click', () => {
+    // Randomly select a stopping position (1 in 50 chance for $5)
+    const targetSegment = Math.random() < 0.02 ? 49 : Math.floor(Math.random() * 49);
+    const stopAngle = (360 / 50) * targetSegment + 1800; // 5 full rotations + offset
     
-    // Disable button visually
-    spinButton.disabled = true;
-    spinButton.style.opacity = '0.6';
-    spinButton.textContent = 'Already Spun';
+    window.wheel.spinTo(stopAngle); // Land precisely on the chosen segment
+    
+    // Disable button after spin
+    const btn = document.getElementById('spin-button');
+    btn.disabled = true;
+    btn.textContent = 'Spin Used';
   });
 };
