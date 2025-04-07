@@ -49,3 +49,20 @@ select {
 label {
   margin-right: 5px;
 }
+
+
+#spin-button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 25px;
+  font-size: 18px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#spin-button:hover {
+  background: #45a049;
+}
