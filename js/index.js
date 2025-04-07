@@ -59,7 +59,6 @@ window.addEventListener('click', (e) => {
     btnSpin.disabled = true;
     btnSpin.style.opacity = '0.5';
     btnSpin.style.cursor = 'not-allowed';
-    btnSpin.textContent = 'Good Luck!';
 
     const { duration, winningItemRotaion } = calcSpinToValues();
     wheel.spinTo(winningItemRotaion, duration);
