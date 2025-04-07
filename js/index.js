@@ -1,4 +1,4 @@
-import {Wheel} from '../../../dist/spin-wheel-esm.js';
+import {Wheel} from '../dist/spin-wheel-esm.js';
 import {loadFonts, loadImages} from '../../../scripts/util.js';
 import {props} from './props.js';
 
