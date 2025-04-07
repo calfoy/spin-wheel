@@ -6,7 +6,20 @@ window.onload = async () => {
   // Use the 'Money' theme — it's the 4th in your array
   const moneyProps = props[3];
 
-  // Load required fonts
+  // 👇 Replace items array with your custom 50-segment config
+  moneyProps.items = [
+    {
+      label: '$5',
+      backgroundColor: '#f23925',
+      labelColor: '#ffffff',
+    },
+    ...Array.from({ length: 49 }, () => ({
+      label: '',
+      backgroundColor: '#ffffff',
+      labelColor: '#ffffff', // You could use 'transparent' if supported
+    })),
+  ];
+
   await loadFonts([moneyProps.itemLabelFont]);
 
   const wheel = new Wheel(document.querySelector('.wheel-wrapper'));
@@ -16,43 +29,51 @@ window.onload = async () => {
   images.push(initImage(moneyProps, 'image'));
   images.push(initImage(moneyProps, 'overlayImage'));
 
-  // Load item-level images (if any — this theme uses labels, mostly)
+  // Load item-level images (none in this setup, but left for safety)
   for (const item of moneyProps.items) {
     images.push(initImage(item, 'image'));
   }
 
   await loadImages(images);
 
-  // Show wheel only after everything loads
   document.querySelector('.wheel-wrapper').style.visibility = 'visible';
 
-  // Initialize the wheel with the money theme
   wheel.init(moneyProps);
 
-  // Save to window for debugging (optional)
+  // 🚫 Disable drag/spin interaction
+  wheel.canvas.style.pointerEvents = 'none';
+
   window.wheel = wheel;
 
   const btnSpin = document.querySelector('button');
+  let isSpinning = false;
   let modifier = 0;
 
   window.addEventListener('click', (e) => {
-    if (e.target === btnSpin) {
+    if (e.target === btnSpin && !isSpinning) {
+      isSpinning = true;
       const { duration, winningItemRotaion } = calcSpinToValues();
       wheel.spinTo(winningItemRotaion, duration);
+
+      // Re-enable button after spin ends (~duration)
+      setTimeout(() => {
+        isSpinning = false;
+      }, duration + 500);
     }
   });
 
   function calcSpinToValues() {
-    const duration = 3000; // Spin duration in ms
-    const winningItemRotaion = getRandomInt(360, 360 * 1.75) + modifier;
-    modifier += 360 * 1.75;
-    return { duration, winningItemRotaion };
-  }
+    const duration = 3000;
+    const totalItems = 50;
 
-  function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
+    const winIndex = Math.floor(Math.random() * totalItems); // 0 to 49
+    const degreesPerSlice = 360 / totalItems;
+    const sliceOffset = degreesPerSlice / 2;
+
+    const winningItemRotaion =
+      360 * 3 + (360 - (winIndex * degreesPerSlice + sliceOffset)); // 3 full spins + exact slice
+
+    return { duration, winningItemRotaion };
   }
 
   function initImage(obj, pName) {
