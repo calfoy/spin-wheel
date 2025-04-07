@@ -233,77 +233,20 @@ export const props = [
     lineWidth: 1,
     lineColor: '#000',
     overlayImage: './img/example-3-overlay.svg',
-    items: [
-      {
-        label: '$ 50',
-      },
-      {
-        label: '$ 200',
-      },
-      {
-        label: '$ 1000',
-        weight: 0.6,
-        backgroundColor: '#f23925',
-        labelColor: '#fff',
-      },
-      {
-        label: '$ 100',
-      },
-      {
-        label: '$ 200',
-      },
-      {
-        label: '$ 500',
-        weight: 0.8,
-        backgroundColor: '#b1ddff',
-      },
-      {
-        label: '$ 100',
-      },
-      {
-        label: '$ 50',
-      },
-      {
-        label: '$ 5000',
-        weight: 0.4,
-        backgroundColor: '#000',
-        labelColor: '#fff',
-      },
-      {
-        label: '$ 50',
-      },
-      {
-        label: '$ 200',
-      },
-      {
-        label: '$ 500',
-        weight: 0.8,
-        backgroundColor: '#b1ddff',
-      },
-      {
-        label: '$ 100',
-      },
-      {
-        label: '$ 200',
-      },
-      {
-        label: '$ 1000',
-        weight: 0.6,
-        backgroundColor: '#f23925',
-        labelColor: '#fff',
-      },
-      {
-        label: '$ 100',
-      },
-      {
-        label: '$ 50',
-      },
-      {
-        label: '$ 500',
-        weight: 0.8,
-        backgroundColor: '#b1ddff',
-      },
-    ],
+   items: [
+  {
+    label: '$5',
+    backgroundColor: '#f23925', // red
+    labelColor: '#ffffff',      // white
+    weight: 1, // This is the winning slice
+  },
+  ...Array.from({ length: 49 }, () => ({
+    label: '',
+    backgroundColor: '#ffffff', // white
+    labelColor: '#ffffff',      // white (or transparent if supported)
+    weight: 49, // Use higher weight to make them more "spinable"
+  })),
+],
   },
 
   {
