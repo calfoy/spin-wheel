@@ -241,7 +241,7 @@ export const props = [
     weight: 1, // This is the winning slice
   },
   ...Array.from({ length: 49 }, () => ({
-    label: '',
+    label: 'Test',
     backgroundColor: '#ffffff', // white
     labelColor: '#ffffff',      // white (or transparent if supported)
     weight: 49, // Use higher weight to make them more "spinable"
