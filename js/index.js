@@ -35,3 +35,11 @@ window.onload = () => {
     btn.textContent = 'Spin Used';
   });
 };
+
+
+window.wheel.callback = (winner) => {
+  if (winner.label.includes('$5')) {
+    alert("Congratulations! You won $5!");
+    // Optional: Add confetti (see next section)
+  }
+};
