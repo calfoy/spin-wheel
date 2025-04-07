@@ -49,18 +49,22 @@ window.onload = async () => {
   let isSpinning = false;
   let modifier = 0;
 
-  window.addEventListener('click', (e) => {
-    if (e.target === btnSpin && !isSpinning) {
-      isSpinning = true;
-      const { duration, winningItemRotaion } = calcSpinToValues();
-      wheel.spinTo(winningItemRotaion, duration);
+let hasSpun = false;
 
-      // Re-enable button after spin ends (~duration)
-      setTimeout(() => {
-        isSpinning = false;
-      }, duration + 500);
-    }
-  });
+window.addEventListener('click', (e) => {
+  if (e.target === btnSpin && !hasSpun) {
+    hasSpun = true; // prevent more spins
+
+    // Optional: disable the button visually too
+    btnSpin.disabled = true;
+    btnSpin.style.opacity = '0.5';
+    btnSpin.style.cursor = 'not-allowed';
+    btnSpin.textContent = 'Good Luck!';
+
+    const { duration, winningItemRotaion } = calcSpinToValues();
+    wheel.spinTo(winningItemRotaion, duration);
+  }
+});
 
   function calcSpinToValues() {
     const duration = 3000;
