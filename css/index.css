@@ -66,3 +66,15 @@ label {
 #spin-button:hover {
   background: #45a049;
 }
+
+#spin-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Wheel container (adjust size as needed) */
+.wheel-wrapper {
+  width: 400px;
+  height: 400px;
+  margin: 0 auto;
+}
