@@ -1,5 +1,5 @@
 import {Wheel} from '../dist/spin-wheel-esm.js';
-import {loadFonts, loadImages} from '../../../scripts/util.js';
+import {loadFonts, loadImages} from '../scripts/util.js';
 import {props} from './props.js';
 
 window.onload = async () => {
