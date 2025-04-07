@@ -3,31 +3,33 @@ import { loadFonts, loadImages } from '../scripts/util.js';
 import { props } from './props.js';
 
 window.onload = async () => {
-  // Load all fonts used in the items
-  await loadFonts(props.map(p => p.itemLabelFont));
+  // Use the 'Money' theme — it's the 4th in your array
+  const moneyProps = props[3];
+
+  // Load required fonts
+  await loadFonts([moneyProps.itemLabelFont]);
 
   const wheel = new Wheel(document.querySelector('.wheel-wrapper'));
   const images = [];
 
-  // Load all images used in the wheel and items
-  const currentProps = props[0]; // Use the first props object (Money theme)
-  
-  images.push(initImage(currentProps, 'image'));
-  images.push(initImage(currentProps, 'overlayImage'));
+  // Load wheel-level images
+  images.push(initImage(moneyProps, 'image'));
+  images.push(initImage(moneyProps, 'overlayImage'));
 
-  for (const item of currentProps.items) {
+  // Load item-level images (if any — this theme uses labels, mostly)
+  for (const item of moneyProps.items) {
     images.push(initImage(item, 'image'));
   }
 
   await loadImages(images);
 
-  // Show the wheel only after everything is loaded
+  // Show wheel only after everything loads
   document.querySelector('.wheel-wrapper').style.visibility = 'visible';
 
-  // Initialize the wheel with selected properties
-  wheel.init(currentProps);
+  // Initialize the wheel with the money theme
+  wheel.init(moneyProps);
 
-  // Save the wheel to window for debugging (optional)
+  // Save to window for debugging (optional)
   window.wheel = wheel;
 
   const btnSpin = document.querySelector('button');
@@ -40,9 +42,8 @@ window.onload = async () => {
     }
   });
 
-  // Helper to calculate a random spin target
   function calcSpinToValues() {
-    const duration = 3000; // 3 seconds
+    const duration = 3000; // Spin duration in ms
     const winningItemRotaion = getRandomInt(360, 360 * 1.75) + modifier;
     modifier += 360 * 1.75;
     return { duration, winningItemRotaion };
