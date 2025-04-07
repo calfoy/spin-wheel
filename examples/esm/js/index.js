@@ -4,15 +4,11 @@ window.onload = () => {
 
   const props = {
     items: [
-      {
-        label: 'one',
-      },
-      {
-        label: 'two',
-      },
-      {
-        label: 'three',
-      },
+      { label: '$5', color: '#FFCE56' },    // Prize 1 (red)
+      { label: 'Thank You', color: '#4BC0C0' }, // No prize (blue)
+      { label: 'Thank You', color: '#4BC0C0' },    // Prize 2 (yellow)
+      { label: 'Thank You', color: '#4BC0C0' }, // No prize (teal)
+      { label: 'Thank You', color: '#4BC0C0' }     // Prize 3 (purple)
     ],
   };
 
