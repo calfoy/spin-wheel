@@ -64,7 +64,24 @@ window.onload = async () => {
       wheel.spinTo(winningItemRotation, duration);
 
       // Show result message after spin ends
-   }, duration + 300);
+  setTimeout(() => {
+  const messageBox = document.getElementById('result-message');
+  console.log('✅ targetWinIndex:', targetWinIndex);
+  console.log('✅ messageBox:', messageBox);
+
+  if (!messageBox) {
+    console.warn('⚠️ result-message element not found.');
+    return;
+  }
+
+  if (targetWinIndex === 0) {
+    messageBox.textContent = '🎉 You won $5!';
+    messageBox.style.color = '#f23925';
+  } else {
+    messageBox.textContent = 'Ohhh! So close. 😢 Thanks for playing!';
+    messageBox.style.color = '#666';
+  }
+}, duration + 300); 
 
   function calcSpinToValues() {
     const duration = 3000;
