@@ -67,7 +67,7 @@ window.addEventListener('click', (e) => {
 
   function calcSpinToValues() {
     const duration = 3000;
-    const totalItems = 50;
+    const totalItems = 45;
 
     const winIndex = Math.floor(Math.random() * totalItems); // 0 to 49
     const degreesPerSlice = 360 / totalItems;
