@@ -6,7 +6,7 @@ window.onload = async () => {
   // Use the 'Money' theme — it's the 4th in your array
   const moneyProps = props[3];
 
-  // 👇 Replace items array with your custom 50-segment config
+  // Define 50 segments: 1 prize + 49 blanks
   moneyProps.items = [
     {
       label: '$5',
@@ -16,7 +16,7 @@ window.onload = async () => {
     ...Array.from({ length: 49 }, () => ({
       label: '',
       backgroundColor: '#ffffff',
-      labelColor: '#ffffff', // You could use 'transparent' if supported
+      labelColor: '#ffffff',
     })),
   ];
 
@@ -29,67 +29,62 @@ window.onload = async () => {
   images.push(initImage(moneyProps, 'image'));
   images.push(initImage(moneyProps, 'overlayImage'));
 
-  // Load item-level images (none in this setup, but left for safety)
+  // Load item-level images
   for (const item of moneyProps.items) {
     images.push(initImage(item, 'image'));
   }
 
   await loadImages(images);
-
   document.querySelector('.wheel-wrapper').style.visibility = 'visible';
-
   wheel.init(moneyProps);
 
-  // 🚫 Disable drag/spin interaction
+  // Disable drag interaction
   wheel.canvas.style.pointerEvents = 'none';
 
   window.wheel = wheel;
 
   const btnSpin = document.querySelector('button');
-  let isSpinning = false;
-  let modifier = 0;
-
-let hasSpun = false;
-
-window.addEventListener('click', (e) => {
-  if (e.target === btnSpin && !hasSpun) {
-    hasSpun = true; // prevent more spins
-
-    // Optional: disable the button visually too
-    btnSpin.disabled = true;
-    btnSpin.style.opacity = '0.5';
-    btnSpin.style.cursor = 'not-allowed';
-
-    const { duration, winningItemRotaion } = calcSpinToValues();
-    wheel.spinTo(winningItemRotaion, duration);
-
-    setTimeout(() => {
-  const landedIndex = getLandedSegmentIndex(wheel.rotation, wheel.props.items.length);
   const messageBox = document.getElementById('result-message');
+  let hasSpun = false;
+  let targetWinIndex = null;
 
-  if (landedIndex === 0) {
-    messageBox.textContent = '🎉 You won $5!';
-    messageBox.style.color = '#f23925'; // red
-  } else {
-    messageBox.textContent = 'Ohhh! So close. 😢 Thanks for playing!';
-    messageBox.style.color = '#666';
-  }
-}, duration + 100); // wait for spin to finish
-  }
-});
+  window.addEventListener('click', (e) => {
+    if (e.target === btnSpin && !hasSpun) {
+      hasSpun = true;
+
+      // Disable button
+      btnSpin.disabled = true;
+      btnSpin.style.opacity = '0.5';
+      btnSpin.style.cursor = 'not-allowed';
+      btnSpin.textContent = 'Good Luck!';
+
+      // Spin the wheel
+      const { duration, winningItemRotation, winIndex } = calcSpinToValues();
+      targetWinIndex = winIndex;
+      wheel.spinTo(winningItemRotation, duration);
+
+      // Show result message after spin ends
+      setTimeout(() => {
+        if (targetWinIndex === 0) {
+          messageBox.textContent = '🎉 You won $5!';
+          messageBox.style.color = '#f23925';
+        } else {
+          messageBox.textContent = 'Ohhh! So close. 😢 Thanks for playing!';
+          messageBox.style.color = '#666';
+        }
+      }, duration + 300); // Add buffer for smooth spin finish
+    }
+  });
 
   function calcSpinToValues() {
     const duration = 3000;
     const totalItems = 50;
-
-    const winIndex = Math.floor(Math.random() * totalItems); // 0 to 49
+    const winIndex = Math.floor(Math.random() * totalItems);
     const degreesPerSlice = 360 / totalItems;
     const sliceOffset = degreesPerSlice / 2;
-
-    const winningItemRotaion =
-      360 * 3 + (360 - (winIndex * degreesPerSlice + sliceOffset)); // 3 full spins + exact slice
-
-    return { duration, winningItemRotaion };
+    const winningItemRotation =
+      360 * 3 + (360 - (winIndex * degreesPerSlice + sliceOffset));
+    return { duration, winningItemRotation, winIndex };
   }
 
   function initImage(obj, pName) {
