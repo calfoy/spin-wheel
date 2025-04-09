@@ -62,6 +62,19 @@ window.addEventListener('click', (e) => {
 
     const { duration, winningItemRotaion } = calcSpinToValues();
     wheel.spinTo(winningItemRotaion, duration);
+
+    setTimeout(() => {
+  const landedIndex = getLandedSegmentIndex(wheel.rotation, wheel.props.items.length);
+  const messageBox = document.getElementById('result-message');
+
+  if (landedIndex === 0) {
+    messageBox.textContent = '🎉 You won $5!';
+    messageBox.style.color = '#f23925'; // red
+  } else {
+    messageBox.textContent = 'Ohhh! So close. 😢 Thanks for playing!';
+    messageBox.style.color = '#666';
+  }
+}, duration + 100); // wait for spin to finish
   }
 });
 
