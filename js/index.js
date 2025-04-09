@@ -64,22 +64,23 @@ window.onload = async () => {
       wheel.spinTo(winningItemRotation, duration);
 
       // Show result message after spin ends
-      setTimeout(() => {
-        setTimeout(() => {
+     setTimeout(() => {
   console.log('✅ Result timeout triggered. targetWinIndex =', targetWinIndex);
+  console.log('📦 messageBox =', messageBox);
+
+  // Test message to verify it shows up no matter what
   messageBox.textContent = '[TEST] This message should always appear!';
+  messageBox.style.color = '#000'; // Just to confirm text visibility
+
+  // Now show actual win/loss message
+  if (targetWinIndex === 0) {
+    messageBox.textContent = '🎉 You won $5!';
+    messageBox.style.color = '#f23925';
+  } else {
+    messageBox.textContent = 'Ohhh! So close. 😢 Thanks for playing!';
+    messageBox.style.color = '#666';
+  }
 }, duration + 300);
-        
-        if (targetWinIndex === 0) {
-          messageBox.textContent = '🎉 You won $5!';
-          messageBox.style.color = '#f23925';
-        } else {
-          messageBox.textContent = 'Ohhh! So close. 😢 Thanks for playing!';
-          messageBox.style.color = '#666';
-        }
-      }, duration + 300); // Add buffer for smooth spin finish
-    }
-  });
 
   function calcSpinToValues() {
     const duration = 3000;
