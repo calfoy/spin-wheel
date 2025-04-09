@@ -13,7 +13,7 @@ window.onload = async () => {
       backgroundColor: '#f23925',
       labelColor: '#ffffff',
     },
-    ...Array.from({ length: 49 }, () => ({
+    ...Array.from({ length: 44 }, () => ({
       label: '',
       backgroundColor: '#ffffff',
       labelColor: '#ffffff', // You could use 'transparent' if supported
