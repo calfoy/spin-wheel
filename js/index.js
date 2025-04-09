@@ -82,6 +82,8 @@ window.onload = async () => {
     messageBox.style.color = '#666';
   }
 }, duration + 300); 
+        } // ✅ closes the if block
+}); // ✅ closes the event listener
 
   function calcSpinToValues() {
     const duration = 3000;
@@ -101,4 +103,3 @@ window.onload = async () => {
     obj[pName] = i;
     return i;
   }
-};
