@@ -65,6 +65,11 @@ window.onload = async () => {
 
       // Show result message after spin ends
       setTimeout(() => {
+        setTimeout(() => {
+  console.log('✅ Result timeout triggered. targetWinIndex =', targetWinIndex);
+  messageBox.textContent = '[TEST] This message should always appear!';
+}, duration + 300);
+        
         if (targetWinIndex === 0) {
           messageBox.textContent = '🎉 You won $5!';
           messageBox.style.color = '#f23925';
