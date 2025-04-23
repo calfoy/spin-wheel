@@ -81,6 +81,9 @@ window.onload = async () => {
     messageBox.textContent = 'Ohhh! You missed the prize. 😢 Thanks for playing!';
     messageBox.style.color = '#666';
   }
+
+    const result = targetWinIndex === 0 ? 'win' : 'lose';
+window.parent.postMessage({ prizeResult: result }, '*');
 }, duration + 300); 
         } // ✅ closes the if block
 }); // ✅ closes the event listener
