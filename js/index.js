@@ -78,7 +78,7 @@ window.onload = async () => {
     messageBox.textContent = '🎉 You won $5!';
     messageBox.style.color = '#f23925';
   } else {
-    messageBox.textContent = 'Ohhh! So close. 😢 Thanks for playing!';
+    messageBox.textContent = 'Ohhh! You missed the prize. 😢 Thanks for playing!';
     messageBox.style.color = '#666';
   }
 }, duration + 300); 
