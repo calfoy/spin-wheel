@@ -9,7 +9,7 @@ window.onload = async () => {
   // Define 50 segments: 1 prize + 49 blanks
   moneyProps.items = [
     {
-      label: '$5',
+      label: '$2',
       backgroundColor: '#f23925',
       labelColor: '#ffffff',
     },
@@ -75,7 +75,7 @@ window.onload = async () => {
   }
 
   if (targetWinIndex === 0) {
-    messageBox.textContent = '🎉 You won $5!';
+    messageBox.textContent = '🎉 You won $2!';
     messageBox.style.color = '#f23925';
   } else {
     messageBox.textContent = 'Ohhh! You missed the prize. 😢 Thanks for playing!';
